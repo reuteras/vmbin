@@ -46,7 +46,7 @@ if grep PRETTY_NAME /etc/os-release | grep -E "(Debian|Kali)" > /dev/null ; then
 	# Add the repository to Apt sources:
 	# shellcheck disable=SC1091
     VERSION_CODENAME=$(. /etc/os-release && echo "$VERSION_CODENAME")
-    if [[ "$VERSION_CODENAME" == "kali-roling" ]]; then
+    if [[ "$VERSION_CODENAME" == "kali-rolling" ]]; then
         VERSION_CODENAME="bookworm"
     fi
 	# shellcheck disable=SC1091
