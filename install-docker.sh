@@ -35,7 +35,7 @@ if grep PRETTY_NAME /etc/os-release | grep "Ubuntu" > /dev/null ; then
 fi
 
 # For Debian from https://docs.docker.com/engine/install/debian/
-if grep PRETTY_NAME /etc/os-release | grep "Debian" > /dev/null ; then
+if grep PRETTY_NAME /etc/os-release | grep -E "(Debian|Kali)" > /dev/null ; then
 	# Add Docker's official GPG key:
 	sudo apt-get update
 	sudo apt-get install -y ca-certificates curl
