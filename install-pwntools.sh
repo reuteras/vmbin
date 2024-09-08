@@ -9,5 +9,7 @@ sudo apt-get install -y python3 python3-pip python3-dev "${PYTHON_VERSION}-venv"
 [[ ! -d ~/src/virtualenvs ]] && mkdir ~/src/virtualenvs
 
 python3 -m venv ~/src/virtualenvs/pwntools
-~/src/virtualenvs/pwntools/bin/activate && python -m pip install --upgrade pip
-~/src/virtualenvs/pwntools/bin/activate && python -m pip install --upgrade pwntools
+# shellcheck disable=SC1090
+. ~/src/virtualenvs/pwntools/bin/activate && python -m pip install --upgrade pip
+# shellcheck disable=SC1090
+. ~/src/virtualenvs/pwntools/bin/activate && python -m pip install --upgrade pwntools
