@@ -14,6 +14,14 @@ python3 -m venv ~/src/virtualenvs/pwntools
 # shellcheck disable=SC1090
 . ~/src/virtualenvs/pwntools/bin/activate && python -m pip install --upgrade pwntools
 
-if ! grep "activate-pwntools" ~/.bashrc > /dev/null 2>&1 ; then
-    echo 'alias activate-pwntools=". ~/src/virtualenvs/pwntools/bin/activate"' >> ~/.bashrc
+if [[ -e ~/.bashrc ]]; then
+    if ! grep "activate-pwntools" ~/.bashrc > /dev/null 2>&1 ; then
+        echo 'alias activate-pwntools=". ~/src/virtualenvs/pwntools/bin/activate"' >> ~/.bashrc
+    fi
+fi
+
+if [[ -e ~/.zshrc ]]; then
+    if ! grep "activate-pwntools" ~/.zshrc > /dev/null 2>&1 ; then
+        echo 'alias activate-pwntools=". ~/src/virtualenvs/pwntools/bin/activate"' >> ~/.zshrc
+    fi
 fi
