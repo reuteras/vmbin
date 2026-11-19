@@ -6,9 +6,21 @@ if [[ ! -f /etc/os-release ]]; then
 	exit
 fi
 
+# Add the invoking user to the docker group so docker can be used without sudo
+add_user_to_docker_group() {
+	local target_user="${SUDO_USER:-$USER}"
+	if [[ -z "$target_user" || "$target_user" == "root" ]]; then
+		echo "Not adding root to the docker group."
+		return
+	fi
+	sudo groupadd -f docker
+	sudo usermod -aG docker "$target_user"
+	echo "Added $target_user to the docker group. Log out and back in (or run 'newgrp docker') for it to take effect."
+}
+
 # Remove conflicting packages
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
-    sudo apt-get remove $pkg
+    sudo apt-get remove -y "$pkg"
 done
 
 # For Ubuntu from https://docs.docker.com/engine/install/ubuntu/
@@ -30,6 +42,8 @@ if grep PRETTY_NAME /etc/os-release | grep "Ubuntu" > /dev/null ; then
 
 	# Install Docker and related tools
 	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+	add_user_to_docker_group
 
 	exit
 fi
@@ -58,6 +72,8 @@ if grep PRETTY_NAME /etc/os-release | grep -E "(Debian|Kali)" > /dev/null ; then
 
 	# Install Docker and related tools
 	sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+	add_user_to_docker_group
 
 	exit
 fi
